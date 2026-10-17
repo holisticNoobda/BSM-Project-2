@@ -1,0 +1,25 @@
+# Data (Kaggle download — never committed)
+data/
+bsm_paper_replication_local/
+
+# Credentials — never commit
+kaggle.json
+*.pem
+
+# Model artefacts (live on Drive / local only)
+checkpoints/
+*.pt
+*.pth
+*.npy
+
+# Extracted paper text (copyrighted — reference only)
+paper_text.txt
+extract_paper.py
+
+# Test scratch
+_local_test/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
