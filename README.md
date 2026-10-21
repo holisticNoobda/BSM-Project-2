@@ -63,9 +63,13 @@ Notebook 01 writes both modules to the Drive project folder with
 ## Key dataset facts (verified from the real Kaggle download)
 
 - 367 images in 6 class folders. Class order used everywhere (paper Fig. 2):
-  Ilmenite 60, Rutile 62, Zircon 60, Garnet 66, Monazite 60, Sillimanite 59.
-- The paper's text says **357** while its own Fig. 2 sums to **367** —
-  both numbers are reported next to the real count (DEVIATIONS row 1).
+  Ilmenite, Rutile, Zircon, Garnet, Monazite, Sillimanite.
+- The paper's text says **357** while its own Fig. 2 sums to **367** — both
+  numbers are reported next to the real count (DEVIATIONS row 1).
+- Real downloaded counts (verified, `01_eda.ipynb` inventory):
+  Ilmenite 62, Rutile 66, Zircon 59, Garnet 60, Monazite 60, Sillimanite 60.
+  Paper Fig. 2 order is Ilmenite 60, Rutile 62, Zircon 60, Garnet 66,
+  Monazite 60, Sillimanite 59 — the two lists differ per class, the totals agree.
 
 ## Paper results for comparison (Table 9 — PAPER numbers, never ours)
 
@@ -75,6 +79,30 @@ Notebook 01 writes both modules to the Drive project folder with
 | ResNet-18 | 0.78 | 0.87 | 0.78 |
 | ResNet-34 | 0.83 | 0.89 | 0.83 |
 | D-ResNet | 0.89 | 0.90 | 0.89 |
+
+## CORRECTED RUN (separate, non-paper-faithful variant)
+
+A second, **user-requested** pipeline that removes the leakage of the paper's
+protocol while keeping the optimisation protocol identical. It lives in its own
+notebooks so the faithful ones stay untouched.
+
+| # | Notebook | What it does |
+|---|----------|--------------|
+| 05 | `05_corr_dresnet50.ipynb` | D-ResNet-50, corrected split |
+| 06 | `06_corr_resnet18.ipynb` | ResNet-18, corrected split |
+| 07 | `07_corr_resnet34.ipynb` | ResNet-34, corrected split |
+| 08 | `08_corr_vgg16.ipynb` | VGG16, corrected split |
+| 09 | `09_corr_comparison.ipynb` | comparison table of the four corrected runs |
+
+Protocol: split by original-image identity **before** augmenting
+(stratified 70/15/15 → 256 train / 55 val / 56 test originals); the 22
+augmented variants are produced **only** from the train originals; the
+training set is `256 originals + 5 632 augmented = 5 888` images; validation
+and test are **original images only**. Training is unchanged (60 epochs,
+full-batch gradient accumulation with micro-batch 32, Adam 1e-3, best-val
+checkpoint). Results are written to
+`results_corr/metrics_*_corrected.json` and always carry `"type": "CORRECTED"`.
+All parameter values are listed in DEVIATIONS.md ("CORRECTED RUN" section).
 
 ## Not reproduced
 
