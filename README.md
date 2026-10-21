@@ -71,6 +71,14 @@ Notebook 01 writes both modules to the Drive project folder with
   Paper Fig. 2 order is Ilmenite 60, Rutile 62, Zircon 60, Garnet 66,
   Monazite 60, Sillimanite 59 — the two lists differ per class, the totals agree.
 
+## Preprocessing conventions (both pipelines)
+
+- Every image is resized to 224x224x3 and **scaled to [0,1]**. The faithful run
+  feeds those pixels to the model unchanged (DEVIATIONS row 10 — the paper only
+  says "224x224x3 normalised" and never defines it).
+- The **corrected** run takes one extra step: per-channel standardisation with
+  the corrected train-fold mean/std (DEVIATIONS row 17).
+
 ## Paper results for comparison (Table 9 — PAPER numbers, never ours)
 
 | Model | Accuracy | Precision | Recall |
