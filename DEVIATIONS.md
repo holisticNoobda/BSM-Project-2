@@ -32,3 +32,14 @@ ambiguities are met during execution.
   silently converting.
 - **Paper numbers are always labelled "paper"** and never mixed into our
   result tables as ours (R7).
+
+## CORRECTED RUN (user-requested, non-paper-faithful for better accuracy)
+
+| Change | Rationale | Notes |
+|---|---|---|
+| Split by original image identity (group-stratified) | Prevents leakage between train/val/test | All augmented variants from the same source image stay in the same split. |
+| Split-before-augment | Avoids augment-before-split leakage | Only original images in the training fold are augmented. Val/test use original images only. |
+| Include original unaugmented images in training | Adds real data the paper excluded | Train = original_train + augmented_from_original_train. |
+| Augmentation applied only to training fold | Standard correct practice | Reduces overfitting to augmented artifacts. |
+| Separate notebooks/metrics labeled `CORRECTED` | Keep faithful runs untouched | 05_corr_*, 06_corr_*, 07_corr_*, 08_corr_*, 09_corr_comparison. All metrics saved as `metrics_*_corrected.json`. |
+
