@@ -1,0 +1,70 @@
+{
+  "model": "resnet34",
+  "type": "CORRECTED",
+  "notebook": "07_corr_resnet34",
+  "best_epoch": 60,
+  "train_set": "train originals + 22 augmented variants of each train original (group split)",
+  "eval_set": "original test images only (group split)",
+  "n_train": 5888,
+  "n_val": 55,
+  "n_test": 56,
+  "train_minutes": 19.71,
+  "test_split": {
+    "accuracy": 0.44642857142857145,
+    "macro_precision": 0.4721628045157456,
+    "macro_recall": 0.4407407407407407,
+    "macro_f1": 0.4249099178923741,
+    "macro_specificity": 0.8889145852605612,
+    "confusion_matrix": [
+      [
+        5,
+        2,
+        0,
+        0,
+        0,
+        3
+      ],
+      [
+        2,
+        7,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        4,
+        0,
+        2,
+        0
+      ],
+      [
+        0,
+        4,
+        0,
+        1,
+        2,
+        2
+      ],
+      [
+        0,
+        1,
+        0,
+        1,
+        5,
+        2
+      ],
+      [
+        2,
+        1,
+        1,
+        0,
+        2,
+        3
+      ]
+    ],
+    "n_test": 56
+  }
+}

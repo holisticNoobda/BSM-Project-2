@@ -1,0 +1,70 @@
+{
+  "model": "dresnet50",
+  "type": "CORRECTED",
+  "notebook": "05_corr_dresnet50",
+  "best_epoch": 53,
+  "train_set": "train originals + 22 augmented variants of each train original (group split)",
+  "eval_set": "original test images only (group split)",
+  "n_train": 5888,
+  "n_val": 55,
+  "n_test": 56,
+  "train_minutes": 27.98,
+  "test_split": {
+    "accuracy": 0.5178571428571429,
+    "macro_precision": 0.5751667816885208,
+    "macro_recall": 0.5148148148148147,
+    "macro_f1": 0.49744555982946076,
+    "macro_specificity": 0.9039469626888684,
+    "confusion_matrix": [
+      [
+        7,
+        1,
+        0,
+        2,
+        0,
+        0
+      ],
+      [
+        1,
+        5,
+        0,
+        2,
+        2,
+        0
+      ],
+      [
+        1,
+        1,
+        4,
+        0,
+        2,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        4,
+        5,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        8,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        1,
+        6,
+        1
+      ]
+    ],
+    "n_test": 56
+  }
+}

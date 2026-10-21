@@ -1,8 +1,8 @@
 # DEVIATIONS.md — ambiguities and how each is resolved
 
 One row per item: what the paper says, what we did, why. Rows 1–16 are the
-pre-agreed decisions (spec section 9); further rows are appended as new
-ambiguities are met during execution.
+pre-agreed decisions (spec section 9); row 17 was added during execution; the
+"RUN STATUS" section at the end is the execution ledger.
 
 | # | Paper statement | What we did | Why |
 |---|-----------------|-------------|-----|
@@ -19,7 +19,7 @@ ambiguities are met during execution.
 | 11 | Which epoch's weights are tested: not stated | Best validation accuracy epoch | Simplest selection rule consistent with having a validation split; test never used for selection |
 | 12 | Table 4 (VGG16) is incomplete (no filter counts, one FC row, "33 convolutional layers" typo) | Standard VGG16 matching the paper's text: 13 conv (blocks 2,2,3,3,3; 64,128,256,512,512) + 3 FC (4096,4096,6), dropout 0.5, NO batch norm | The text describes standard VGG16; the table is incomplete rather than contradictory |
 | 13 | "Data imputation (median)" and "data versioning" applied to image data — the paper's tabular definitions do not map onto image files | nb03: metadata-level median imputation (missing/null + MAD-z outliers in width/height/channels/mean intensity) AND pixel-level impulse-outlier replacement by the 3x3 local median; versioning = uint8 (N,224,224,3) arrays + labels + manifests + checksums, tags v1-v4, never overwritten | Literal implementation of the paper's wording at both levels, documented in nb03 |
-| 14 | "Model re-engineering" (Fig. 5 loop) and "deployment with the support of cross-validation" are described but not specified | Re-engineering = if train_acc − best_val_acc > 0.15 after round 0, run ONE round with weight decay 1e-4 and lr 5e-4 (MAX_REENGINEERING_ROUNDS=1). 5-fold stratified CV cell exists but is guarded by RUN_CROSS_VALIDATION=False | Minimal faithful reading; both configurable and logged per round |
+| 14 | "Model re-engineering" (Fig. 5 loop) and "deployment with the support of cross-validation" are described but not specified | Re-engineering = if train_acc − best_val_acc > 0.15 (measured at the best-validation epoch), run ONE extra round from a fresh model with weight decay 1e-4 and lr 5e-4 (MAX_REENGINEERING_ROUNDS=1); the round with the higher validation accuracy is the one evaluated on the test split. Implemented in every training notebook (05–08 and 05_corr–08_corr) as an explicit, printed decision, with the gap and both rounds recorded in the metrics JSON (`"re_engineering"`, `"selected_round"`). 5-fold stratified CV cell exists but is guarded by RUN_CROSS_VALIDATION=False | Minimal faithful reading; both configurable and logged per round |
 | 15 | Table 10 / Fig. 15: RMSE of D-ResNet vs SVM, CART, KNN, RF, SGB, Cubist | NOT reproduced | The numbers come from a different task (ilmenite-content prediction, Lv et al. [19]); the paper never defines an RMSE for D-ResNet, so there is nothing to replicate |
 | 16 | Paper reports accuracy/precision/recall only in Table 9; abstract mentions specificity | Per-class specificity = TN/(TN+FP) computed and reported as an extra column beyond the paper's layout | Spec section 8 requires it; it extends (not contradicts) the paper's tables |
 | 17 | "224x224x3 normalised" is undefined in the paper, and the two pipelines normalise differently | **Faithful run**: uint8/float32 arrays scaled to [0,1] and fed to the model as-is (no per-channel standardisation) — verified on the executed runs: `versions/X_train.npy` is float32 in [0,1], mean 0.537. **Corrected run**: uint8 → [0,1] → per-channel standardisation with the corrected train-fold mean/std (0.0568 / 0.2383) | Both conventions are applied consistently *within* their own pipeline and identically to all four models. The corrected train fold is a different set of images, so its statistics must be recomputed. Changing the faithful convention now would invalidate the already-measured faithful results, so the difference is documented rather than retro-fitted |
@@ -57,4 +57,52 @@ ambiguities are met during execution.
 | Optimisation | Unchanged from the faithful run: 60 epochs, full-batch gradient accumulation (micro-batch 32, one optimiser step per epoch), Adam lr 1e-3, wd 0, no scheduler, best-val checkpoint. |
 | Evaluation | **Original test images only** (56). The paper's "18 unseen images" subset is not reproduced in the corrected run (that subset belongs to the faithful protocol). |
 | Reported metrics | Accuracy, macro precision/recall/F1, macro specificity, confusion matrix, best epoch, n_test → `results_corr/metrics_*_corrected.json`. |
+
+## RUN STATUS (2026-10-22)
+
+The Colab GPU quota for this account was exhausted on 2026-10-22, which stopped
+the run queue. This is the ledger of what ran, what was retained, what was lost
+and what is still pending. Nothing below is estimated — every number comes from
+a metrics/history JSON that is committed in this repo.
+
+### Completed and retained
+
+| Run | Protocol | Test accuracy | Artefacts in this repo |
+|---|---|---|---|
+| `05_dresnet50` | paper-faithful | 0.7228 (1 212 test images) | `notebooks/05_dresnet50.ipynb`, `results/metrics_dresnet50.json`, `results/history_dresnet50.json` |
+| `05_corr_dresnet50` | corrected | 0.5179 (29/56) | `executed/05_corr_dresnet50.ipynb`, `results_corr/metrics_dresnet50_corrected.json`, `results_corr/history_dresnet50_corrected.json` |
+| `06_corr_resnet18` | corrected | 0.5179 (29/56) | `executed/06_corr_resnet18.ipynb`, `results_corr/metrics_resnet18_corrected.json`, `results_corr/history_resnet18_corrected.json` |
+| `07_corr_resnet34` | corrected | 0.4464 (25/56) | `executed/07_corr_resnet34.ipynb`, `results_corr/metrics_resnet34_corrected.json`, `results_corr/history_resnet34_corrected.json` |
+
+### Interrupted or lost
+
+| Run | What happened |
+|---|---|
+| `08_corr_vgg16` | Stopped at epoch 38/60 when the Colab runtime was reset. The history is retained (`results_corr/history_vgg16_corrected.json`: best val 0.2364 at epoch 26, train acc 0.1703 at epoch 38) and the run resumes from the epoch-30 resume checkpoint, so at most epochs 31–38 are redone. No metrics file exists yet. |
+| `06_resnet18`, `07_resnet34` (paper-faithful) | Measured earlier on 2026-10-21 (test accuracy 0.5817 and 0.7698) but their metrics JSONs and checkpoints were never written to the shared Drive folder and did not survive the runtime reset. The numbers are therefore **not** recorded as results here; both runs are pending again. |
+| `05_corr_dresnet50` metrics | The executed notebook was re-run to refresh it after the staging-file fix; that re-run resumed in 46 s and overwrote `train_minutes` with the resumed wall clock (0.07 min). The committed metrics JSON was restored from a backup and reports the real first-run time (27.98 min). The history's `epoch_time_s` sum (27.77 min) agrees, so the notebook now derives `train_minutes` from that sum instead of the wall clock. |
+
+### Pending (needs a Colab GPU again)
+
+1. `08_vgg16` (paper-faithful VGG16) — built and syntax-checked, never executed.
+2. `06_resnet18`, `07_resnet34` (paper-faithful) — re-run to regenerate the
+   metrics JSONs and checkpoints.
+3. `09_comparison` — Table 9 / Fig. 9 comparison plus the paper's 18-image
+   subset evaluation; needs the four paper-faithful checkpoints.
+4. `08_corr_vgg16` — finish round 0, then the re-engineering check.
+5. `06_corr_resnet18`, `07_corr_resnet34` — re-engineering round 1 (see below).
+6. `09_corr_comparison` — corrected comparison table over the four corrected runs.
+
+### Re-engineering decisions measured so far (trigger: gap = train_acc(best-val epoch) − best_val_acc > 0.15)
+
+| Run | Gap | Decision |
+|---|---|---|
+| `05_dresnet50` (paper-faithful) | +0.0031 | no extra round |
+| `05_corr_dresnet50` | +0.0152 | no extra round |
+| `06_corr_resnet18` | +0.2507 | **extra round required** (lr 5e-4, wd 1e-4) — pending |
+| `07_corr_resnet34` | +0.2270 | **extra round required** (lr 5e-4, wd 1e-4) — pending |
+| `08_corr_vgg16` (epoch 38) | −0.0480 (still underfitting) | no extra round |
+
+The paper-faithful ResNet-18/34 gaps are unknown until those runs are repeated;
+their notebooks now print and log the decision automatically.
 
