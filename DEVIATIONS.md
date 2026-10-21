@@ -43,3 +43,17 @@ ambiguities are met during execution.
 | Augmentation applied only to training fold | Standard correct practice | Reduces overfitting to augmented artifacts. |
 | Separate notebooks/metrics labeled `CORRECTED` | Keep faithful runs untouched | 05_corr_*, 06_corr_*, 07_corr_*, 08_corr_*, 09_corr_comparison. All metrics saved as `metrics_*_corrected.json`. |
 
+### CORRECTED RUN — finalised parameter values (all logged, none silent)
+
+| Item | Value |
+|---|---|
+| Source of the 367 originals | KaggleHub `prasannavenkatesant/beach-sand-mineral-bsm` (public dataset, downloaded anonymously — no credentials are stored in code, notebooks or outputs). On Colab the download happens at run time; `data/` is git-ignored. |
+| Group id | `class__filename_stem` — every original file is its own group (367 unique groups; md5 check found 0 byte-identical images, so no hidden duplicates). |
+| Split algorithm | `StratifiedShuffleSplit` (sklearn) on the class label: 70 % train / 15 % val / 15 % test, seed 42 → **256 / 55 / 56** originals. Class balance: train 43/46/41/42/42/42, val 9/10/9/9/9/9, test 10/10/9/9/9/9 (Ilmenite, Rutile, Zircon, Garnet, Monazite, Sillimanite). Group-disjointness is asserted in the notebook. |
+| Augmentation | Same 22-variant recipe as the faithful nb02, applied **only** to the 256 train originals (5 632 variants). |
+| Training set | 256 originals + 5 632 augmented variants = **5 888** images (uint8, 224x224x3, ~887 MB). |
+| Normalisation | Pixels to [0,1] then per-channel standardisation with the **corrected train-fold** mean/std (0.0568 / 0.2383; identical for R, G, B because the source images are effectively grayscale). Same convention as the faithful run, but with statistics recomputed on the corrected train fold. |
+| Optimisation | Unchanged from the faithful run: 60 epochs, full-batch gradient accumulation (micro-batch 32, one optimiser step per epoch), Adam lr 1e-3, wd 0, no scheduler, best-val checkpoint. |
+| Evaluation | **Original test images only** (56). The paper's "18 unseen images" subset is not reproduced in the corrected run (that subset belongs to the faithful protocol). |
+| Reported metrics | Accuracy, macro precision/recall/F1, macro specificity, confusion matrix, best epoch, n_test → `results_corr/metrics_*_corrected.json`. |
+
