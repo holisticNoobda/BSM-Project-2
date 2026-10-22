@@ -19,6 +19,10 @@ extract_paper.py
 # Test scratch
 _local_test/
 
+# Kaggle bundle (generated: dataset packs the images, output holds kernel artefacts)
+kaggle/dataset/
+kaggle/output/
+
 # Python
 __pycache__/
 *.pyc

@@ -1,0 +1,16 @@
+{
+  "id": "kiramada/bsm-smoke-check",
+  "title": "bsm-smoke-check",
+  "code_file": "kernel.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "kiramada/bsm-paper-2-kaggle"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

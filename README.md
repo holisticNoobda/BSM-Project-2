@@ -162,13 +162,26 @@ Cubist) — those numbers come from a different task (ilmenite-content
 regression, Lv et al. [19]) and the paper never defines an RMSE for D-ResNet.
 See DEVIATIONS row 15.
 
-## Run status (2026-10-22)
+## Run status (2026-10-23)
 
-The Colab GPU quota for this account ran out on 2026-10-22, which stopped the
-run queue: the paper-faithful VGG16 and the comparison notebooks have not run
-yet, and the corrected VGG16 was interrupted at epoch 38/60. Everything that
-was measured and retained is listed above; the full ledger of what ran, what
-was lost and what is pending (with reasons) is in
+Colab's GPU quota for this account ran out on 2026-10-22, so the remaining runs
+were moved to **Kaggle** (deviation 18). The pipeline is unchanged — same images,
+augmentation table, splits, seeds, epochs, checkpoint rule; a shim
+(`kaggle/src/bsm_env.py`) recreates the Colab folder layout inside the Kaggle
+container so the notebook code itself runs untouched. See [kaggle/README.md](kaggle/README.md).
+
+| Kernel | Queue | Estimated |
+|---|---|---|
+| `kiramada/bsm-faithful-remaining` | 01 → 02 → 03 → 04 → 05 → 06 → 07 → 08 → 09 | ~2 h 05 |
+| `kiramada/bsm-corrected-remaining` | 06_corr → 07_corr → 08_corr → 09_corr | ~1 h 30 |
+
+Estimates use the measured per-epoch times from the committed history JSONs
+(R18 13.6 s, R34 19.5 s, D-R50 24.3 s, VGG16 51.3 s) plus ~12 min of data
+preparation; run in parallel the wall clock is ~2 h 15. Kaggle gives 6 GPU-hours
+per week (`quota_view()` → 21 600 s), so the queue uses ~60 % of one week.
+
+Everything that was measured on Colab and retained is listed above; the full
+ledger of what ran, what was lost and what is pending (with reasons) is in
 [DEVIATIONS.md](DEVIATIONS.md) → "RUN STATUS".
 
 Every training notebook (05–08 and 05_corr–08_corr) now contains the

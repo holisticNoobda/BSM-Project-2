@@ -23,6 +23,8 @@ pre-agreed decisions (spec section 9); row 17 was added during execution; the
 | 15 | Table 10 / Fig. 15: RMSE of D-ResNet vs SVM, CART, KNN, RF, SGB, Cubist | NOT reproduced | The numbers come from a different task (ilmenite-content prediction, Lv et al. [19]); the paper never defines an RMSE for D-ResNet, so there is nothing to replicate |
 | 16 | Paper reports accuracy/precision/recall only in Table 9; abstract mentions specificity | Per-class specificity = TN/(TN+FP) computed and reported as an extra column beyond the paper's layout | Spec section 8 requires it; it extends (not contradicts) the paper's tables |
 | 17 | "224x224x3 normalised" is undefined in the paper, and the two pipelines normalise differently | **Faithful run**: uint8/float32 arrays scaled to [0,1] and fed to the model as-is (no per-channel standardisation) — verified on the executed runs: `versions/X_train.npy` is float32 in [0,1], mean 0.537. **Corrected run**: uint8 → [0,1] → per-channel standardisation with the corrected train-fold mean/std (0.0568 / 0.2383) | Both conventions are applied consistently *within* their own pipeline and identically to all four models. The corrected train fold is a different set of images, so its statistics must be recomputed. Changing the faithful convention now would invalidate the already-measured faithful results, so the difference is documented rather than retro-fitted |
+| 18 | Execution environment: the paper uses "NVIDIA V100, 32 GB RAM, 12th Gen Intel i5" (Section 4); the replication ran on Colab, whose GPU quota is now exhausted | Remaining runs (faithful 05–09, corrected 06–09) execute on **Kaggle** (P100 16 GB requested), driven by `kaggle/build_bundle.py` + `kaggle/src/bsm_env.py`. The shim recreates the Colab folder layout (`/content/drive/MyDrive/bsm_paper_replication`, `/content/BSM_Project_2`) inside the Kaggle container, so the notebook code itself is unchanged. Only three mechanical edits are applied: Drive mount removed, bootstrap cell prepended, and nb01's dataset-acquisition cell reads the attached Kaggle dataset instead of `kagglehub` | Hardware/environment swap only — no change to data, augmentation, splits, seeds, hyper-parameters, epoch budget, checkpoint rule, or metrics. Different GPU ⇒ per-epoch wall-clock changes (recorded per epoch in `epoch_time_s`), which does not affect any reported metric |
+| 19 | Notebook housekeeping for the Kaggle runs | Stored cell outputs are stripped from the Kaggle variants, and each cell receives an `id` | Kaggle's nbformat validator rejects the Colab notebooks before execution (`'metadata' is a required property` on an old `execute_result`). The executed notebooks produced by the run carry fresh outputs; no analysis code or output used in the report is removed |
 
 ## Standing notes
 
@@ -82,14 +84,35 @@ a metrics/history JSON that is committed in this repo.
 | `06_resnet18`, `07_resnet34` (paper-faithful) | Measured earlier on 2026-10-21 (test accuracy 0.5817 and 0.7698) but their metrics JSONs and checkpoints were never written to the shared Drive folder and did not survive the runtime reset. The numbers are therefore **not** recorded as results here; both runs are pending again. |
 | `05_corr_dresnet50` metrics | The executed notebook was re-run to refresh it after the staging-file fix; that re-run resumed in 46 s and overwrote `train_minutes` with the resumed wall clock (0.07 min). The committed metrics JSON was restored from a backup and reports the real first-run time (27.98 min). The history's `epoch_time_s` sum (27.77 min) agrees, so the notebook now derives `train_minutes` from that sum instead of the wall clock. |
 
-### Pending (needs a Colab GPU again)
+### Pending — moved to Kaggle (2026-10-23)
+
+The Colab GPU quota is exhausted, so the queue below runs on Kaggle instead
+(deviation 18). Nothing about the protocol changes; only the execution
+environment and file paths.
+
+**Faithful kernel** (`kiramada/bsm-faithful-remaining`, ~2 h 05 on a P100):
+`01_eda` → `02_data_augmentation` → `03_imputation_wrangling_versioning` →
+`04_split_70_15_15` → `05_dresnet50` → `06_resnet18` → `07_resnet34` →
+`08_vgg16` → `09_comparison`.
+
+- `01`/`02`/`03`/`04` are re-run because the augmented PNGs and the
+  `versions/*.npy` arrays were never committed (too large) and the inventory CSV
+  must point at real Kaggle paths. The augmentation table is deterministic, so
+  the arrays are reproducible; the split is `StratifiedShuffleSplit(seed=42)`.
+- `05_dresnet50` is re-run so `09_comparison` has a checkpoint for every Table 9
+  row; the earlier Colab measurement (0.7228) stays in the ledger above, and the
+  Kaggle re-run is reported alongside it rather than replacing it silently.
+
+**Corrected kernel** (`kiramada/bsm-corrected-remaining`, ~1 h 30):
+`06_corr_resnet18` → `07_corr_resnet34` → `08_corr_vgg16` → `09_corr_comparison`.
 
 1. `08_vgg16` (paper-faithful VGG16) — built and syntax-checked, never executed.
 2. `06_resnet18`, `07_resnet34` (paper-faithful) — re-run to regenerate the
    metrics JSONs and checkpoints.
 3. `09_comparison` — Table 9 / Fig. 9 comparison plus the paper's 18-image
    subset evaluation; needs the four paper-faithful checkpoints.
-4. `08_corr_vgg16` — finish round 0, then the re-engineering check.
+4. `08_corr_vgg16` — the epoch-30 resume checkpoint did **not** survive the Colab
+   runtime reset (only the history did), so round 0 restarts from epoch 1.
 5. `06_corr_resnet18`, `07_corr_resnet34` — re-engineering round 1 (see below).
 6. `09_corr_comparison` — corrected comparison table over the four corrected runs.
 
