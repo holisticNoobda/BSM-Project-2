@@ -1,0 +1,20 @@
+{
+  "rounds": [
+    {
+      "tag": "resnet18",
+      "best_epoch": 60,
+      "best_val": 0.9223781998348473,
+      "train_at_best": 0.9385949389488586,
+      "train_seconds": 584.9504458904266,
+      "gap": 0.016216739114011336
+    }
+  ],
+  "selected": {
+    "tag": "resnet18",
+    "best_epoch": 60,
+    "best_val": 0.9223781998348473,
+    "train_at_best": 0.9385949389488586,
+    "train_seconds": 584.9504458904266,
+    "gap": 0.016216739114011336
+  }
+}

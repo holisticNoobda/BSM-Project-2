@@ -2,67 +2,93 @@
   "model": "resnet34",
   "type": "CORRECTED",
   "notebook": "07_corr_resnet34",
-  "best_epoch": 60,
+  "best_epoch": 38,
+  "selected_round": {
+    "tag": "resnet34_corr_re1",
+    "best_epoch": 38,
+    "best_val": 0.5818181818181818,
+    "train_at_best": 0.9103260869565217,
+    "train_seconds": 1004.2298295497894,
+    "gap": 0.32850790513833994
+  },
+  "re_engineering": [
+    {
+      "tag": "resnet34_corr",
+      "best_epoch": 48,
+      "best_val": 0.4727272727272727,
+      "train_at_best": 0.6657608695652174,
+      "train_seconds": 1003.0269391536713,
+      "gap": 0.1930335968379447
+    },
+    {
+      "tag": "resnet34_corr_re1",
+      "best_epoch": 38,
+      "best_val": 0.5818181818181818,
+      "train_at_best": 0.9103260869565217,
+      "train_seconds": 1004.2298295497894,
+      "gap": 0.32850790513833994
+    }
+  ],
   "train_set": "train originals + 22 augmented variants of each train original (group split)",
   "eval_set": "original test images only (group split)",
   "n_train": 5888,
   "n_val": 55,
   "n_test": 56,
-  "train_minutes": 19.71,
+  "train_minutes": 33.45,
   "test_split": {
-    "accuracy": 0.44642857142857145,
-    "macro_precision": 0.4721628045157456,
-    "macro_recall": 0.4407407407407407,
-    "macro_f1": 0.4249099178923741,
-    "macro_specificity": 0.8889145852605612,
+    "accuracy": 0.42857142857142855,
+    "macro_precision": 0.3550407925407925,
+    "macro_recall": 0.4185185185185185,
+    "macro_f1": 0.38198997649125527,
+    "macro_specificity": 0.8857539315448658,
     "confusion_matrix": [
       [
-        5,
+        7,
         2,
+        1,
         0,
         0,
-        0,
-        3
+        0
       ],
       [
-        2,
+        1,
         7,
         1,
-        0,
+        1,
         0,
         0
       ],
       [
         1,
+        1,
+        3,
         2,
-        4,
-        0,
         2,
         0
       ],
       [
+        1,
+        2,
+        0,
+        3,
+        3,
+        0
+      ],
+      [
+        0,
+        1,
         0,
         4,
-        0,
-        1,
-        2,
-        2
+        4,
+        0
       ],
       [
-        0,
         1,
         0,
+        3,
         1,
-        5,
-        2
-      ],
-      [
-        2,
-        1,
-        1,
-        0,
-        2,
-        3
+        4,
+        0
       ]
     ],
     "n_test": 56

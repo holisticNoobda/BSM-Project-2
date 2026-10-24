@@ -1,0 +1,28 @@
+{
+  "rounds": [
+    {
+      "tag": "resnet34_corr",
+      "best_epoch": 48,
+      "best_val": 0.4727272727272727,
+      "train_at_best": 0.6657608695652174,
+      "train_seconds": 1003.0269391536713,
+      "gap": 0.1930335968379447
+    },
+    {
+      "tag": "resnet34_corr_re1",
+      "best_epoch": 38,
+      "best_val": 0.5818181818181818,
+      "train_at_best": 0.9103260869565217,
+      "train_seconds": 1004.2298295497894,
+      "gap": 0.32850790513833994
+    }
+  ],
+  "selected": {
+    "tag": "resnet34_corr_re1",
+    "best_epoch": 38,
+    "best_val": 0.5818181818181818,
+    "train_at_best": 0.9103260869565217,
+    "train_seconds": 1004.2298295497894,
+    "gap": 0.32850790513833994
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "rounds": [
+    {
+      "tag": "dresnet50",
+      "best_epoch": 60,
+      "best_val": 0.7613542526837325,
+      "train_at_best": 0.7304901787294285,
+      "train_seconds": 1494.0020868778229,
+      "gap": -0.030864073954304017
+    }
+  ],
+  "selected": {
+    "tag": "dresnet50",
+    "best_epoch": 60,
+    "best_val": 0.7613542526837325,
+    "train_at_best": 0.7304901787294285,
+    "train_seconds": 1494.0020868778229,
+    "gap": -0.030864073954304017
+  }
+}

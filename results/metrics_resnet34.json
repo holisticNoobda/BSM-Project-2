@@ -1,0 +1,88 @@
+{
+  "model": "resnet34",
+  "notebook": "07_resnet34",
+  "best_epoch": 48,
+  "selected_round": {
+    "tag": "resnet34",
+    "best_epoch": 48,
+    "best_val": 0.7654830718414534,
+    "train_at_best": 0.7754379755795434,
+    "train_seconds": 939.4266874790192,
+    "gap": 0.009954903738090048
+  },
+  "re_engineering": [
+    {
+      "tag": "resnet34",
+      "best_epoch": 48,
+      "best_val": 0.7654830718414534,
+      "train_at_best": 0.7754379755795434,
+      "train_seconds": 939.4266874790192,
+      "gap": 0.009954903738090048
+    }
+  ],
+  "train_minutes": 15.66,
+  "test_split": {
+    "accuracy": 0.7673267326732673,
+    "macro_precision": 0.783570821143909,
+    "macro_recall": 0.7704076556280629,
+    "macro_f1": 0.7644857564448503,
+    "macro_specificity": 0.9536005355277094,
+    "confusion_matrix": [
+      [
+        189,
+        0,
+        7,
+        5,
+        0,
+        4
+      ],
+      [
+        40,
+        119,
+        5,
+        4,
+        29,
+        21
+      ],
+      [
+        6,
+        1,
+        170,
+        7,
+        4,
+        7
+      ],
+      [
+        8,
+        1,
+        10,
+        158,
+        6,
+        15
+      ],
+      [
+        0,
+        0,
+        35,
+        13,
+        148,
+        2
+      ],
+      [
+        4,
+        3,
+        14,
+        1,
+        30,
+        146
+      ]
+    ],
+    "n_test": 1212
+  },
+  "paper_reported_table9": {
+    "accuracy": 0.83,
+    "precision": 0.89,
+    "recall": 0.83,
+    "note": "PAPER numbers (Table 9), for comparison only"
+  }
+}

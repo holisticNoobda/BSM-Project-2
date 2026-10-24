@@ -1,0 +1,20 @@
+{
+  "rounds": [
+    {
+      "tag": "vgg16_corr",
+      "best_epoch": 31,
+      "best_val": 0.2727272727272727,
+      "train_at_best": 0.2586616847826087,
+      "train_seconds": 2718.710070371628,
+      "gap": -0.014065587944664004
+    }
+  ],
+  "selected": {
+    "tag": "vgg16_corr",
+    "best_epoch": 31,
+    "best_val": 0.2727272727272727,
+    "train_at_best": 0.2586616847826087,
+    "train_seconds": 2718.710070371628,
+    "gap": -0.014065587944664004
+  }
+}

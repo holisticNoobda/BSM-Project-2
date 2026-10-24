@@ -1,0 +1,20 @@
+{
+  "rounds": [
+    {
+      "tag": "resnet34",
+      "best_epoch": 48,
+      "best_val": 0.7654830718414534,
+      "train_at_best": 0.7754379755795434,
+      "train_seconds": 939.4266874790192,
+      "gap": 0.009954903738090048
+    }
+  ],
+  "selected": {
+    "tag": "resnet34",
+    "best_epoch": 48,
+    "best_val": 0.7654830718414534,
+    "train_at_best": 0.7754379755795434,
+    "train_seconds": 939.4266874790192,
+    "gap": 0.009954903738090048
+  }
+}

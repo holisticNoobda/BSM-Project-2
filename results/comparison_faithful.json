@@ -1,0 +1,136 @@
+{
+  "faithful_measured": [
+    {
+      "Model": "D-ResNet-50",
+      "Accuracy": 0.7582508250825083,
+      "Precision": 0.7586721407864377,
+      "Recall": 0.7572678810875276,
+      "F1": 0.7561005089530474,
+      "Specificity": 0.9517505566627213,
+      "Best epoch": 60,
+      "n test": 1212,
+      "PAPER Accuracy": 0.89,
+      "PAPER Precision": 0.9,
+      "PAPER Recall": 0.89
+    },
+    {
+      "Model": "ResNet-18",
+      "Accuracy": 0.9141914191419142,
+      "Precision": 0.9212951396254482,
+      "Recall": 0.9135812195892753,
+      "F1": 0.9149283313601169,
+      "Specificity": 0.9827570149638626,
+      "Best epoch": 60,
+      "n test": 1212,
+      "PAPER Accuracy": 0.78,
+      "PAPER Precision": 0.87,
+      "PAPER Recall": 0.78
+    },
+    {
+      "Model": "ResNet-34",
+      "Accuracy": 0.7673267326732673,
+      "Precision": 0.783570821143909,
+      "Recall": 0.7704076556280629,
+      "F1": 0.7644857564448503,
+      "Specificity": 0.9536005355277094,
+      "Best epoch": 48,
+      "n test": 1212,
+      "PAPER Accuracy": 0.83,
+      "PAPER Precision": 0.89,
+      "PAPER Recall": 0.83
+    },
+    {
+      "Model": "VGG16",
+      "Accuracy": 0.2607260726072607,
+      "Precision": 0.13247630219032128,
+      "Recall": 0.25749853272789053,
+      "F1": 0.16444945829647725,
+      "Specificity": 0.8517561648655906,
+      "Best epoch": 43,
+      "n test": 1212,
+      "PAPER Accuracy": 0.83,
+      "PAPER Precision": 0.89,
+      "PAPER Recall": 0.83
+    }
+  ],
+  "paper_table9_reference_only": {
+    "dresnet50": {
+      "accuracy": 0.89,
+      "precision": 0.9,
+      "recall": 0.89
+    },
+    "resnet18": {
+      "accuracy": 0.78,
+      "precision": 0.87,
+      "recall": 0.78
+    },
+    "resnet34": {
+      "accuracy": 0.83,
+      "precision": 0.89,
+      "recall": 0.83
+    },
+    "vgg16": {
+      "accuracy": 0.83,
+      "precision": 0.89,
+      "recall": 0.83
+    }
+  },
+  "paper_18_subset": [
+    {
+      "Model": "D-ResNet-50",
+      "18-img accuracy": 0.6666666666666666,
+      "18-img macro P": 0.7666666666666666,
+      "18-img macro R": 0.6666666666666666,
+      "18-img macro F1": 0.6488095238095237,
+      "correct": 12,
+      "of": 18
+    },
+    {
+      "Model": "ResNet-18",
+      "18-img accuracy": 0.9444444444444444,
+      "18-img macro P": 0.9583333333333334,
+      "18-img macro R": 0.9444444444444443,
+      "18-img macro F1": 0.942857142857143,
+      "correct": 17,
+      "of": 18
+    },
+    {
+      "Model": "ResNet-34",
+      "18-img accuracy": 0.7777777777777778,
+      "18-img macro P": 0.8333333333333334,
+      "18-img macro R": 0.7777777777777777,
+      "18-img macro F1": 0.7642857142857142,
+      "correct": 14,
+      "of": 18
+    },
+    {
+      "Model": "VGG16",
+      "18-img accuracy": 0.2222222222222222,
+      "18-img macro P": 0.1111111111111111,
+      "18-img macro R": 0.2222222222222222,
+      "18-img macro F1": 0.14526214526214526,
+      "correct": 4,
+      "of": 18
+    }
+  ],
+  "paper_18_indices": [
+    126,
+    797,
+    930,
+    142,
+    842,
+    1029,
+    578,
+    903,
+    1178,
+    218,
+    612,
+    906,
+    197,
+    488,
+    637,
+    470,
+    805,
+    974
+  ]
+}

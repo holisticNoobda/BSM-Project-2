@@ -1,0 +1,88 @@
+{
+  "model": "vgg16",
+  "type": "CORRECTED",
+  "notebook": "08_corr_vgg16",
+  "best_epoch": 31,
+  "selected_round": {
+    "tag": "vgg16_corr",
+    "best_epoch": 31,
+    "best_val": 0.2727272727272727,
+    "train_at_best": 0.2586616847826087,
+    "train_seconds": 2718.710070371628,
+    "gap": -0.014065587944664004
+  },
+  "re_engineering": [
+    {
+      "tag": "vgg16_corr",
+      "best_epoch": 31,
+      "best_val": 0.2727272727272727,
+      "train_at_best": 0.2586616847826087,
+      "train_seconds": 2718.710070371628,
+      "gap": -0.014065587944664004
+    }
+  ],
+  "train_set": "train originals + 22 augmented variants of each train original (group split)",
+  "eval_set": "original test images only (group split)",
+  "n_train": 5888,
+  "n_val": 55,
+  "n_test": 56,
+  "train_minutes": 45.31,
+  "test_split": {
+    "accuracy": 0.3392857142857143,
+    "macro_precision": 0.3494259363824581,
+    "macro_recall": 0.337037037037037,
+    "macro_f1": 0.2495316063864451,
+    "macro_specificity": 0.8675609004008634,
+    "confusion_matrix": [
+      [
+        1,
+        3,
+        0,
+        3,
+        0,
+        3
+      ],
+      [
+        0,
+        7,
+        0,
+        2,
+        1,
+        0
+      ],
+      [
+        0,
+        7,
+        0,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        8,
+        1,
+        0
+      ],
+      [
+        0,
+        3,
+        0,
+        3,
+        3,
+        0
+      ],
+      [
+        0,
+        3,
+        0,
+        5,
+        1,
+        0
+      ]
+    ],
+    "n_test": 56
+  }
+}

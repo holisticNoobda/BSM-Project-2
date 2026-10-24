@@ -2,56 +2,74 @@
   "model": "resnet18",
   "type": "CORRECTED",
   "notebook": "06_corr_resnet18",
-  "best_epoch": 59,
+  "best_epoch": 36,
+  "selected_round": {
+    "tag": "resnet18_corr_re1",
+    "best_epoch": 36,
+    "best_val": 0.6363636363636364,
+    "train_at_best": 0.9247622282608695,
+    "train_seconds": 659.1310999393463,
+    "gap": 0.28839859189723316
+  },
+  "re_engineering": [
+    {
+      "tag": "resnet18_corr",
+      "best_epoch": 50,
+      "best_val": 0.5454545454545454,
+      "train_at_best": 0.6975203804347826,
+      "train_seconds": 657.9225296974182,
+      "gap": 0.15206583498023718
+    },
+    {
+      "tag": "resnet18_corr_re1",
+      "best_epoch": 36,
+      "best_val": 0.6363636363636364,
+      "train_at_best": 0.9247622282608695,
+      "train_seconds": 659.1310999393463,
+      "gap": 0.28839859189723316
+    }
+  ],
   "train_set": "train originals + 22 augmented variants of each train original (group split)",
   "eval_set": "original test images only (group split)",
   "n_train": 5888,
   "n_val": 55,
   "n_test": 56,
-  "train_minutes": 13.78,
+  "train_minutes": 21.95,
   "test_split": {
-    "accuracy": 0.5178571428571429,
-    "macro_precision": 0.5368686868686868,
-    "macro_recall": 0.5166666666666667,
-    "macro_f1": 0.4969716775599129,
-    "macro_specificity": 0.9037156953438173,
+    "accuracy": 0.4642857142857143,
+    "macro_precision": 0.5622266622266622,
+    "macro_recall": 0.4611111111111111,
+    "macro_f1": 0.4589545338973256,
+    "macro_specificity": 0.8931544865864939,
     "confusion_matrix": [
       [
-        6,
+        7,
         1,
-        2,
+        1,
+        1,
         0,
-        0,
-        1
+        0
       ],
       [
         2,
-        5,
+        4,
         1,
-        1,
+        2,
         1,
         0
       ],
       [
         1,
         0,
-        5,
+        4,
         2,
-        1,
+        2,
         0
       ],
       [
         0,
         0,
-        1,
-        8,
-        0,
-        0
-      ],
-      [
-        0,
         2,
-        0,
         4,
         3,
         0
@@ -59,9 +77,17 @@
       [
         1,
         0,
-        2,
-        1,
+        0,
         3,
+        5,
+        0
+      ],
+      [
+        0,
+        1,
+        2,
+        2,
+        2,
         2
       ]
     ],
